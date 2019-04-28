@@ -10,7 +10,7 @@ Players will use the arrow keys to move the Beetle to eat the Food and grow in s
 
 
 ### Component Parts
-The game uses P5. I also used some crucial sound effects from www.freesound.org
+The game uses P5. I also used some crucial sound effects and music from www.freesound.org
 
 
 ### Timeline
@@ -46,6 +46,8 @@ https://p5js.org/reference/
 http://colorizer.org/
 https://www.openprocessing.org/sketch/100832/
 https://freesound.org/search/?q=video+game+music&page=3#sound
+Background music: https://freesound.org/people/shortiefoeva2/sounds/405220/
+Winning music: https://freesound.org/people/Satanen/sounds/317383/
 https://editor.p5js.org/toren/sketches/fzHp4g1eV
 https://editor.p5js.org/alexiscca/sketches/9IRa-EOnO
 
