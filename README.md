@@ -34,7 +34,7 @@ Metaphors are super important in informing the game design and providing ideas f
 
 ### Completed Work
 see uploaded code:
-https://github.com/alexiscca/hw12/blob/master/HungryGame_10percentassasins.html
+https://github.com/alexiscca/hw12/blob/master/HungryGame_10percentassasins_REDBLUE.html
 
 ### References and links
 #### Beetle articles:
