@@ -21,13 +21,13 @@ Week 3: Decide to do the game. Figure out game mechanics and objectives and buil
 Week 4: Present!
 
 ### Challenges
-It was challenging to do some of the math. Figuring out how identify when the the Beetle was located mostly in the center of the Portal took some time. Also the math for making some of the Ants chase the Beetle was difficult. 
+It was challenging to do some of the math. Figuring out how to identify when the the Beetle was located mostly in the center of the Portal took some time. Also the math for making some of the Ants chase the Beetle was difficult. 
 
-It was also surprising that the simpler version of the Hallucination was more effective in fatiguing and distracting the eyes than the more complicated versions. Which is great because it was more elegant and easier to maintain.
+It was also surprising that the simpler version of the Hallucination was more effective in fatiguing and distracting the eyes than the more complicated versions. Which is great because it was more elegant and much easier to code.
 
-I also was surprised at how much sound makes the game more like a game. It honestly felt a little boring without the effects and soundtrack. I was happy that I decided to add that in. 
+I also was surprised at how much sound makes the game more like a game. It honestly felt a little lacking without the effects and soundtrack. I was happy that I decided to add that in. 
 
-It was also interesting to see how little tweaks like increasing or decreasing the variables (like the number of Ants or the size of the Beetles or Portal) by just a little bit has a huge effect on the difficulty level of the game play. This is encouraging b/c it provides natural ways to make levels of increasing difficulty with different kinds of challenges. 
+It was also interesting to see how little tweaks like increasing or decreasing the variables (like the number of Ants or the size of the Beetles or Portal) by just a little bit has a huge effect on the difficulty level of the game play. This is encouraging b/c it provides natural ways to make levels of increasing difficulty with different kinds of challenges. I may continue to work on this project in the summer and add levels.
 
 
 ### Completed Work
