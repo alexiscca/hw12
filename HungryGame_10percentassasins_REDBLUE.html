@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html>
+<head>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.7.1/p5.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.7.1/addons/p5.sound.min.js"></script>
+<script language="javascript" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.7.1/addons/p5.sound.js"></script>
+
+<style>
+  html, body {
+    margin: 0;
+    padding: 0;
+  }
+</style>
+<meta charset="utf-8" />
+</head>
+<body>
+<script>
+
+var lastContactWithPoison = -100000  // No contact before the game starts;
+var lastPoisonContacted = -1; // No contact before the game starts;
+
+var firstBarY = 0
+var hallucinationSpeed = 0.5
+var hallucinationAcceleration = 1.2
+var maxHallucinationSpeed = 5
+var hallucinationTimeMs = 2500;
+var amountPoison = 100
+var glowValue = 0.1
+var playWinningSongOnce = 0
+
+var foodRadius = 10;
+var poisonRadius = 10;
+var playerGrowth = 0.2;
+var playerInitialSize = 10;
+var playerMinRadius = 1;
+var playerMaxRadius = 50;
+var portalRadius = 30;
+
+var player = {
+  x: 10, //Player position
+  y: 15, //Player position
+  speed: 4, //Speed of player
+  radius: playerInitialSize //Size of player
+};
+
+var portal = {
+  x:0,
+  y:0,
+  radius: 0
+}
+
+var foods = [];
+var bubbles = [];
+
+function clearCanvas() {
+  background('blue');
+}
+
+function preload() {
+  soundFormats('mp3', 'ogg', 'wav',);
+  foodSound = loadSound('waterdrop.mp3');
+  poisonSound = loadSound('hurt.wav');
+  backgroundSong = loadSound('playgroundsong.mp3');
+  winningSong = loadSound('winningsong.mp3')
+}
+
+function setup() {
+  colorMode (HSB);
+  createCanvas(windowWidth-10, windowHeight-10);
+
+  foodSound.setVolume(0.7);
+  poisonSound.setVolume(0.3);
+  backgroundSong.setVolume(0.3);
+  winningSong.setVolume(0.5);
+  backgroundSong.loop();//loop background music
+
+  //food setup
+  for (var j = 0; j < 500; j++) {
+    var food = {
+      a: random(50, width - 50),
+      b: random(50, height - 50),
+      radius: foodRadius
+    };
+    foods.push(food);
+  }
+  //poison bubbles setup
+  for (var i = 0; i < amountPoison; i++) {
+    var bubble = {
+      x: random(2*player.radius, width - 50),
+      y: random(2*player.radius, height - 50),
+      radius: poisonRadius
+    };
+    bubbles.push(bubble);
+  }
+  // portal setup
+
+  portal.x = width/2;
+  portal.y = height/2;
+  portal.radius = portalRadius;
+
+}
+
+function draw() {
+  clearCanvas();
+  drawPortal();
+  drawPlayer();
+  drawFood();
+  drawPoison();
+
+  currentTime = millis()
+  if (playerTouchesPoison()) {
+    lastContactWithPoison = currentTime;
+    poisonSound.play();//playing sound
+  }
+
+  if (playerIsHallucinating()) {
+    drawHallucination();
+  }
+
+  if (playerWon()) {
+    backgroundSong.stop();
+    drawEndGame();
+    bubbles = [];
+    if (playWinningSongOnce == 0) {
+      winningSong.loop();//playing background music
+    }
+    playWinningSongOnce = 1;
+  }
+}
+
+function playerIsHallucinating() {
+  return lastContactWithPoison > currentTime - hallucinationTimeMs;
+}
+
+function drawPlayer() {
+  //player appearance
+  noStroke();
+  fill('yellow'); //red
+  ellipse(player.x, player.y, player.radius*2);
+
+  //Read input to update player position
+  if (keyIsDown(UP_ARROW)) {
+    player.y -= player.speed;
+  }
+
+  if (keyIsDown(DOWN_ARROW)) {
+    player.y += player.speed;
+  }
+
+  if (keyIsDown(LEFT_ARROW)) {
+    player.x -= player.speed;
+  }
+
+  if (keyIsDown(RIGHT_ARROW)) {
+    player.x += player.speed;
+  }
+
+  //Constrain player to screen
+  if (player.x < 0) {
+    player.x = width-5;
+  }
+  if (player.x > width) {
+    player.x = 0;
+  }
+  if (player.y < 0) {
+    player.y = height - 1;
+  }
+
+  if (player.y > height) {
+    player.y = 0;
+  }
+}
+
+function drawFood() {
+  //food bubbles
+  for (var j = 0; j < foods.length; j++) {
+    var food = foods[j];
+    if (dist(player.x, player.y, food.a, food.b) <= food.radius+player.radius) {
+      // fill(129, 100, 100, 1);//green flicker
+      fill('yellow');//yellow flicker
+      foodSound.play();//playing sound
+      foods.splice(j, 1); // remove this bubble!
+      resizePlayer();
+    } else {
+      // fill('cyan');
+      // fill(60, 100, 100, 0.5); //yellow
+      // fill(114, 100, 100); //green
+      fill(180, 100, 100, 0.8); //cyan
+    }
+    ellipse(food.a, food.b, food.radius*2);
+  }
+}
+
+function resizePlayer() {
+  player.radius += playerGrowth;
+  if (player.radius >= playerMaxRadius) {
+    player.radius = playerMaxRadius;
+  }
+  if (player.radius <= playerMinRadius) {
+    player.radius = playerMinRadius;
+  }
+}
+
+function drawPoison() {
+  //poison bubbles
+  fill('red');
+  for (var i = 0; i < bubbles.length; i++) {
+    var bubble = bubbles[i];
+    ellipse(bubble.x, bubble.y, bubble.radius*2);
+    newX = bubble.x + random(-1.2, 1.2);
+    newY = bubble.y + random(-1, 1);
+    // each 10th bubble is an assassin bubble; assasin moves only towards the player
+    if (i %10 != 0 || dist(player.x, player.y, bubble.x, bubble.y) >
+        dist(player.x, player.y, newX, newY) ) {
+       bubble.x = newX;
+       bubble.y = newY;
+    }
+    //poison bubbles that touch portal will die
+    if ( dist(bubble.x, bubble.y, portal.x, portal.y)<= portal.radius + bubble.radius) {
+      fill('red');
+      ellipse(bubble.x, bubble.y, bubble.radius*2);
+      bubbles.splice(i, 1); // remove this bubble!
+      fill(0);
+
+    }
+  }
+}
+
+function playerTouchesPoison() {
+  for (var i = 0; i < bubbles.length; i++) {
+    var bubble = bubbles[i];
+
+    if (dist(player.x, player.y, bubble.x, bubble.y) <= player.radius + bubble.radius) {
+      if (lastPoisonContacted != i) {
+        increaseHallucinationSpeed();
+        player.radius = playerInitialSize;
+      }
+      lastPoisonContacted = i;
+      return true;
+    }
+  }
+  return false;
+}
+
+function drawHallucination() {
+
+  fill('red');
+  //Rows moving up
+  for (var j = firstBarY; j <= height; j = j + 20) {
+    rect(0, j, width, 10);
+  }
+  firstBarY = firstBarY - hallucinationSpeed
+  if (firstBarY < -40) {
+    firstBarY += 20
+  }
+}
+
+function increaseHallucinationSpeed() {
+  hallucinationSpeed *= hallucinationAcceleration;
+  hallucinationSpeed = min(hallucinationSpeed, maxHallucinationSpeed);
+}
+
+function drawPortal() {
+  stroke('yellow')
+  noFill()
+  strokeWeight(2);
+  if (player.radius >= portal.radius) {
+    colorMode(HSB)
+    fill(360*(1+sin(millis()/1000))/2, 255, 255, 0.6)
+  }
+  ellipse(width/2, height/2, portal.radius*2)
+}
+
+function drawEndGame() {
+  fill('blue')
+  rect(0, 0, windowWidth, windowHeight)
+  textSize(32);
+  fill('white');
+  textAlign(CENTER);
+  text('YOU WON!', width/2, height/2);
+}
+
+function playerWon() {
+  if (player.radius >= portal.radius &&
+      dist(player.x, player.y, portal.x, portal.y) + portal.radius <= player.radius+5) {
+    return true;
+  }
+  return false;
+}
+
+</script>
+</body>
+</html>
