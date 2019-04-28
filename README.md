@@ -29,6 +29,8 @@ I also was surprised at how much sound makes the game more like a game. It hones
 
 It was also interesting to see how little tweaks like increasing or decreasing the variables (like the number of Ants or the size of the Beetles or Portal) by just a little bit has a huge effect on the difficulty level of the game play. This is encouraging b/c it provides natural ways to make levels of increasing difficulty with different kinds of challenges. I may continue to work on this project in the summer and add levels.
 
+Metaphors are super important in informing the game design and providing ideas for how the game should be played. 
+
 
 ### Completed Work
 see uploaded code:
