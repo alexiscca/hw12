@@ -176,12 +176,12 @@ function drawFood() {
   for (var j = 0; j < foods.length; j++) {
     var food = foods[j];
     if (dist(player.x, player.y, food.a, food.b) <= food.radius+player.radius) {
-      fill(129, 100, 100);
+      fill(129, 100, 100, 0.9);
       foodSound.play();//playing sound
       foods.splice(j, 1); // remove this bubble!
       resizePlayer();
     } else {
-      fill(59, 100, 100, 0.7);
+      fill(60, 100, 100, 0.5);
     }
     ellipse(food.a, food.b, food.radius*2);
   }
@@ -213,7 +213,11 @@ function drawPoison() {
     }
     //poison bubbles that touch portal will die
     if ( dist(bubble.x, bubble.y, portal.x, portal.y)<= portal.radius + bubble.radius) {
+      fill('red');
+      ellipse(bubble.x, bubble.y, bubble.radius*2);
       bubbles.splice(i, 1); // remove this bubble!
+      fill(0);
+
     }
   }
 }
@@ -235,6 +239,7 @@ function playerTouchesPoison() {
 }
 
 function drawHallucination() {
+
   fill(0);
   //Rows moving up
   for (var j = firstBarY; j <= height; j = j + 20) {
