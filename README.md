@@ -34,8 +34,6 @@ It was also interesting to see how little tweaks like increasing or decreasing t
 see uploaded code
 
 ### References and links
-Tutorials, comments, videos, magazine articles - anything you found that helps you understand your project.
-
 #### Beetle articles:
 https://en.wikipedia.org/wiki/Ant_nest_beetle
 https://www.newscientist.com/article/2124050-sneaky-beetles-evolved-disguise-to-look-like-ants-then-eat-them/
