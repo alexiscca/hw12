@@ -31,7 +31,8 @@ It was also interesting to see how little tweaks like increasing or decreasing t
 
 
 ### Completed Work
-see uploaded code
+see uploaded code:
+https://github.com/alexiscca/hw12/blob/master/HungryGame_10percentassasins.html
 
 ### References and links
 #### Beetle articles:
