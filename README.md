@@ -1,5 +1,5 @@
 ## Hungry Game
-Hungry Game is a simple javascript game. It is an exploration of minimalistic and intuitive game design that aims to be fun without sacrificing challenge and gameplay.
+Hungry Game is a simple javascript game. It is an exploration of minimalistic and intuitive game design that aims to be as simple as possible without sacrificing fun, challenge and gameplay.
 
 
 ### Summary
